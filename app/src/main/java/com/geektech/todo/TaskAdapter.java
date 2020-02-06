@@ -75,6 +75,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
             title.setText(task.title);
             description.setText(task.description);
             deadline.setText(task.deadline);
+            checkbox.setChecked(task.checked);
         }
     }
 

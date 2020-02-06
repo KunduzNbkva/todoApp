@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity implements OnVHClick{
             if (data.getSerializableExtra("new_task")!=null){
             Task task = (Task) data.getSerializableExtra("new_task");
             tasks.remove(editIndex);
-            tasks.add(task);
+            tasks.add(editIndex, task);
 
         } else{
             tasks.remove(editIndex);
