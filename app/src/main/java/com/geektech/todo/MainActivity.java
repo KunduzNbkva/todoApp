@@ -8,13 +8,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements OnVHClick{
 
-    ArrayList<Task> tasks = new ArrayList<>();
-    TaskAdapter adapter;
+    private ArrayList<Task> tasks = new ArrayList<>();
+    private TaskAdapter adapter;
+    private int editIndex;
 
 
     @Override
@@ -25,11 +27,11 @@ public class MainActivity extends AppCompatActivity {
         ArrayList<Task> savedTasks = Storage.read(this);
         tasks = savedTasks;
 
-        adapter = new TaskAdapter(tasks);
+        adapter = new TaskAdapter(tasks, this);
+        adapter.activity=this;
 
         RecyclerView recyclerView = findViewById(R.id.recyclerview);
         recyclerView.setAdapter(adapter);
-
         Button button = findViewById(R.id.open);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -47,8 +49,27 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && requestCode == 42) {
             Task task = (Task) data.getSerializableExtra("task");
             tasks.add(task);
-            adapter.notifyDataSetChanged();
-            Storage.save(tasks, this);
         }
+        if (resultCode == RESULT_OK && requestCode == 2) {
+            if (data.getSerializableExtra("new_task")!=null){
+            Task task = (Task) data.getSerializableExtra("new_task");
+            tasks.remove(editIndex);
+            tasks.add(task);
+
+        } else{
+            tasks.remove(editIndex);
+            }
+        }
+        adapter.notifyDataSetChanged();
+        Storage.save(tasks, this);
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        editIndex = position;
+        Intent intent=new Intent(this,ThirdActivity.class);
+        intent.putExtra("key",tasks.get(position));
+        startActivityForResult(intent,2);
+
     }
 }

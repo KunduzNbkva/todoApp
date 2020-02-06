@@ -8,18 +8,22 @@
     tools:context=".AddTaskActivity">
 
     <EditText
+        android:layout_margin="20dp"
         android:id="@+id/task_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Title"/>
 
     <EditText
+        android:layout_margin="20dp"
         android:id="@+id/task_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Description"/>
 
     <EditText
+        android:layout_margin="20dp"
+        android:inputType="numberDecimal"
         android:id="@+id/task_deadline"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
