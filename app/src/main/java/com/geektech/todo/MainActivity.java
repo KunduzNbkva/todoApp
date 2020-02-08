@@ -4,19 +4,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity implements OnVHClick{
 
     private ArrayList<Task> tasks = new ArrayList<>();
     private TaskAdapter adapter;
     private int editIndex;
+
+
 
 
     @Override
@@ -41,6 +46,7 @@ public class MainActivity extends AppCompatActivity implements OnVHClick{
             }
         });
     }
+
 
 
     @Override
@@ -71,5 +77,12 @@ public class MainActivity extends AppCompatActivity implements OnVHClick{
         intent.putExtra("key",tasks.get(position));
         startActivityForResult(intent,2);
 
+    }
+
+    @Override
+    public void onCheckedClick(int position) {
+        tasks.remove(position);
+        adapter.notifyItemRemoved(position);
+        Storage.save(tasks, this);
     }
 }

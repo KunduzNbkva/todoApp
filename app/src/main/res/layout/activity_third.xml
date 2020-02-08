@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:hint="Description"/>
 
-    <EditText
+    <TextView
         android:layout_margin="20dp"
         android:id="@+id/edit_deadline"
         android:layout_width="match_parent"

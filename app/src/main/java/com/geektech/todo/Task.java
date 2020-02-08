@@ -1,11 +1,12 @@
 package com.geektech.todo;
 
 import java.io.Serializable;
+import java.util.Date;
 
 public class Task implements Serializable {
     public String title;
     public String description;
-    public String deadline;
-    public boolean checked;// TODO: Change to Date type
+    public Date deadline;// TODO: Change to Date type
+    public boolean checked;
 
 }

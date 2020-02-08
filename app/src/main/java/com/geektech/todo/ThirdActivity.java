@@ -2,19 +2,26 @@ package com.geektech.todo;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class ThirdActivity extends AppCompatActivity {
     EditText editTitle;
     EditText editDescription;
-    EditText editDeadline;
+    TextView editDeadline;
     Task task;
     Button save,delete;
+    Calendar calendar=Calendar.getInstance();
 
 
 
@@ -26,6 +33,25 @@ public class ThirdActivity extends AppCompatActivity {
         editTitle=findViewById(R.id.edit_title);
         editDescription=findViewById(R.id.edit_description);
         editDeadline=findViewById(R.id.edit_deadline);
+        editDeadline.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                int nyear= calendar.get(calendar.YEAR);
+                int nmonth= calendar.get(calendar.MONTH);
+               int nday= calendar.get(calendar.DAY_OF_MONTH);
+
+
+                new DatePickerDialog(editDeadline.getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        calendar.set(year,month,dayOfMonth);
+                        editDeadline.setText(dayOfMonth+"-"+(month+1)+"-"+year);
+                    }
+                },nyear,nmonth,nday).show();
+
+            }
+        });
 
         delete=findViewById(R.id.delete);
         save=findViewById(R.id.save);
@@ -49,7 +75,7 @@ public class ThirdActivity extends AppCompatActivity {
                     task.description = editDescription.getText().toString().trim();
                 }
 
-                task.deadline = editDeadline.getText().toString();
+                task.deadline = calendar.getTime();
 
 
                 Intent intent = new Intent();
@@ -71,7 +97,8 @@ public class ThirdActivity extends AppCompatActivity {
          task= (Task)i.getSerializableExtra("key");
          editTitle.setText(task.title);
         editDescription.setText(task.description);
-        editDeadline.setText(task.deadline);
+
+        editDeadline.setText(new SimpleDateFormat("dd-MM-yyyy").format(task.deadline));
 
 
     }

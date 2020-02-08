@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:hint="Description"/>
 
-    <EditText
+    <TextView
         android:layout_margin="20dp"
         android:inputType="numberDecimal"
         android:id="@+id/task_deadline"
